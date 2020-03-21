@@ -10,7 +10,7 @@ cursor.execute(""" CREATE TABLE user (
     userId Integer Primary Key Autoincrement,
     email text unique,
     username text unique,
-    password text unique,
+    password text,
     isDeleted Integer Default 0,
     createdDate text,
     modifiedDate text

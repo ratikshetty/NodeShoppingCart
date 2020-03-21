@@ -1,0 +1,27 @@
+{
+  "name": "node",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ratikshetty/NodeShoppingCart.git"
+  },
+  "author": "Ratik Shetty",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/ratikshetty/NodeShoppingCart/issues"
+  },
+  "homepage": "https://github.com/ratikshetty/NodeShoppingCart#readme",
+  "dependencies": {
+    "express": "^4.17.1",
+    "jsonwebtoken": "^8.5.1",
+    "sqlite3": "^4.1.1"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.2"
+  }
+}
