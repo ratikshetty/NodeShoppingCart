@@ -1,47 +1,7 @@
-const express = require('express');
+const {shoppingCartdb} = require('./shoppingCartDBConnect')
 const jwt = require('jsonwebtoken');
-const sqlite3 = require("sqlite3").verbose();
 
-const app = express();
-
-app.use(express.json());
-
-// JWT verify function --start
-
-function verify(req, res, next){
-
-    let auth = req.headers.authorization
-
-    // console.log(auth)
-    if(!auth){
-        return res.sendStatus(401);
-    }
-    else{
-        auth = auth.split(' ');
-        let token = auth[1]
-        req.token = token
-
-        next()
-    }
-}
-
-// JWT verify function --End
-
-const shoppingCartdb = new sqlite3.Database('../database/shoppingCart.db', sqlite3.OPEN_READWRITE, err => {
-    if(err){
-        console.error(err.message);
-    }
-    else{
-        console.log('Successfully connected to ShoppingCartDB!!!')
-    }
-})
-
-// app.get('/', (req, res) => {
-//     res.send('hiii')
-// })
-
-// Authenticate user method --start
-app.get('/user', (req, res) => {
+function getUser(req, res){
 
     let username = req.headers.username;
     let password = req.headers.password;
@@ -76,15 +36,9 @@ app.get('/user', (req, res) => {
             }
         }
     })
-})
+}
 
-
-// Authenticate user method --end
-
-// Create user --start
-
-app.post('/user', (req, res) => {
-
+function createUser(req, res){
     if(!req.body.username) return res.sendStatus(400).send('username field missing!!!');
     if(!req.body.password) return res.sendStatus(400).send('password field is missing!!!');
     if(!req.body.email) return res.sendStatus(400).send('email id is missing!!!')
@@ -102,15 +56,10 @@ app.post('/user', (req, res) => {
             return res.sendStatus(201);
         } 
     } )
-})
+}
 
-// create user --ends
+function updateUser(req, res){
 
-// update password --starts
-
-app.put('/user', verify, (req, res) => {
-
-    // console.log(req.token)
     jwt.verify(req.token, 'ratikssh', (err, authData) => {
         if(err){
             return res.sendStatus(403);
@@ -136,14 +85,9 @@ app.put('/user', verify, (req, res) => {
             })
         }
     })
-})
+}
 
-// update password --ends
-
-// delete user --start
-
-app.delete('/user', verify, (req, res) => {
-
+function deleteUser(req, res){
     jwt.verify(req.token, 'ratikssh', (err, authData) => {
         if(err){
             return res.sendStatus(403);
@@ -165,9 +109,6 @@ app.delete('/user', verify, (req, res) => {
                 
         }
     })
-})
+}
 
-// delete user --ends
-
-
-app.listen(3001);
+module.exports = {getUser, createUser, updateUser, deleteUser}

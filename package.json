@@ -17,11 +17,13 @@
   },
   "homepage": "https://github.com/ratikshetty/NodeShoppingCart#readme",
   "dependencies": {
+    "babel": "^6.23.0",
     "express": "^4.17.1",
     "jsonwebtoken": "^8.5.1",
     "sqlite3": "^4.1.1"
   },
   "devDependencies": {
+    "@babel/core": "^7.9.0",
     "nodemon": "^2.0.2"
   }
 }
