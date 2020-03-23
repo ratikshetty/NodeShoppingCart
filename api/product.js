@@ -141,7 +141,32 @@ function updateProduct(req, res){
     })
 }
 
+function deleteProduct(req, res){
+
+    jwt.verify(req.token, 'ratikssh', (err, authData) => {
+
+        if(err){
+            res.status(403).send(err);
+        }
+        else{
+            
+            let sqlQuery = `update product
+                            set isDeleted = 1
+                            where productId = ?`
+
+            shoppingCartdb.run(sqlQuery, [req.params.productId], (err) => {
+                if(err){
+                    return res.status(400).send(err)
+                }
+                else{
+
+                    return res.status(200).send('Product Deleted!!!')
+                }
+            })
+        }
+    })
+}
 
 
 
-module.exports = { getProducts, addProduct, updateProduct }
+module.exports = { getProducts, addProduct, updateProduct, deleteProduct }

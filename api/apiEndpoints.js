@@ -3,7 +3,7 @@ const jwt = require('jsonwebtoken');
 const verify = require("./jwt")
 const {shoppingCartdb} = require('./shoppingCartDBConnect');
 const {getUser, createUser, updateUser, deleteUser} = require ('./user')
-const {getProducts, addProduct, updateProduct} = require('./product')
+const {getProducts, addProduct, updateProduct, deleteProduct} = require('./product')
 
 
 const app = express();
@@ -44,6 +44,10 @@ app.post('/products', verify, (req, res) => {
 app.put('/products/:productId', verify, (req, res) => {
 
     updateProduct(req, res)
+})
+
+app.delete('/products/:productId', verify, (req, res) => {
+    deleteProduct(req, res)
 })
 // Product API's --end
 
