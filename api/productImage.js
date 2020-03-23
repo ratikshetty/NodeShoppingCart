@@ -1,6 +1,6 @@
 const { shoppingCartdb } = require('./shoppingCartDBConnect')
 const jwt = require('jsonwebtoken')
-const verify = require('./jwt')
+const {encryptionKey} = require('./jwt')
 
 
 function getImage(req, res) {
@@ -21,7 +21,7 @@ function getImage(req, res) {
 
 function addImage(req, res) {
 
-    jwt.verify(req.token, 'ratikssh', (err, authData) => {
+    jwt.verify(req.token, encryptionKey, (err, authData) => {
 
         if (err) {
             return res.status(403).send(err)
@@ -71,7 +71,7 @@ function addImage(req, res) {
 
 function deleteImage(req, res) {
 
-    jwt.verify(req.token, 'ratikssh', (err, authData) => {
+    jwt.verify(req.token, encryptionKey, (err, authData) => {
 
         if (err) {
             return res.send(403).status(err)

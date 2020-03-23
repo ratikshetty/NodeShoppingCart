@@ -1,5 +1,6 @@
 const {shoppingCartdb} = require('./shoppingCartDBConnect')
 const jwt = require('jsonwebtoken');
+const {encryptionKey} = require('./jwt')
 
 function getUser(req, res){
 
@@ -22,7 +23,7 @@ function getUser(req, res){
             user = rows[0];
 
             if(user && user.password === password){
-                jwt.sign({user}, 'ratikssh', (err, token) => {
+                jwt.sign({user}, encryptionKey, (err, token) => {
                     if(err){
                         return res.send(err);
                     }
@@ -60,7 +61,7 @@ function createUser(req, res){
 
 function updateUser(req, res){
 
-    jwt.verify(req.token, 'ratikssh', (err, authData) => {
+    jwt.verify(req.token, encryptionKey, (err, authData) => {
         if(err){
             return res.sendStatus(403);
         }
@@ -88,7 +89,7 @@ function updateUser(req, res){
 }
 
 function deleteUser(req, res){
-    jwt.verify(req.token, 'ratikssh', (err, authData) => {
+    jwt.verify(req.token, encryptionKey, (err, authData) => {
         if(err){
             return res.sendStatus(403);
         }

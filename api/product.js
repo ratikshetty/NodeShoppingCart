@@ -1,6 +1,6 @@
 const { shoppingCartdb } = require('./shoppingCartDBConnect');
 const jwt = require('jsonwebtoken');
-const verify = require('./jwt')
+const {encryptionKey} = require('./jwt')
 
 
 function getProducts(req, res) {
@@ -23,7 +23,7 @@ function getProducts(req, res) {
 
 function addProduct(req, res) {
 
-    jwt.verify(req.token, 'ratikssh', (err, authData) => {
+    jwt.verify(req.token, encryptionKey, (err, authData) => {
 
         if (err) {
             return res.sendStatus(403);
@@ -86,7 +86,7 @@ function addProduct(req, res) {
 
 function updateProduct(req, res) {
 
-    jwt.verify(req.token, 'ratikssh', (err, authData) => {
+    jwt.verify(req.token, encryptionKey, (err, authData) => {
 
         if (err) {
             return res.status(403).send(err);
@@ -143,7 +143,7 @@ function updateProduct(req, res) {
 
 function deleteProduct(req, res) {
 
-    jwt.verify(req.token, 'ratikssh', (err, authData) => {
+    jwt.verify(req.token, encryptionKey, (err, authData) => {
 
         if (err) {
             res.status(403).send(err);

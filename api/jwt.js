@@ -1,7 +1,7 @@
 const jwt = require('jsonwebtoken');
 
 // JWT verify function --start
-module.exports = (req, res, next) => {
+function verify (req, res, next){
 
     let auth = req.headers.authorization;
 
@@ -17,4 +17,8 @@ module.exports = (req, res, next) => {
         next()
     }
 }
+
+const encryptionKey = "ratikssh"
 // JWT verify function --End
+
+module.exports = {verify, encryptionKey}
