@@ -4,7 +4,7 @@ const verify = require("./jwt")
 const {shoppingCartdb} = require('./shoppingCartDBConnect');
 const {getUser, createUser, updateUser, deleteUser} = require ('./user')
 const {getProducts, addProduct, updateProduct, deleteProduct} = require('./product')
-
+const {addImage, getImage, deleteImage} = require('./productImage')
 
 const app = express();
 
@@ -51,5 +51,19 @@ app.delete('/products/:productId', verify, (req, res) => {
 })
 // Product API's --end
 
+// Product Image API's --start
 
+app.get('/productImage/:productId', (req, res) => {
+    getImage(req, res)
+})
+
+app.post('/productImage/:productId', verify, (req, res) => {
+    addImage(req, res)
+})
+
+app.delete('/productImage/:imageId', verify, (req, res) => {
+    deleteImage(req, res)
+})
+
+// Product Image API's --end
 app.listen(3003);

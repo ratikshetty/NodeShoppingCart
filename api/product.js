@@ -84,14 +84,14 @@ function addProduct(req, res) {
     })
 }
 
-function updateProduct(req, res){
+function updateProduct(req, res) {
 
     jwt.verify(req.token, 'ratikssh', (err, authData) => {
 
-        if(err){
+        if (err) {
             return res.status(403).send(err);
         }
-        else{
+        else {
 
             if (!req.params.productId) return res.status(400).send("product Id is missing")
             if (!req.body.productName) return res.status(400).send("Product Name Missing!!!");
@@ -141,24 +141,24 @@ function updateProduct(req, res){
     })
 }
 
-function deleteProduct(req, res){
+function deleteProduct(req, res) {
 
     jwt.verify(req.token, 'ratikssh', (err, authData) => {
 
-        if(err){
+        if (err) {
             res.status(403).send(err);
         }
-        else{
-            
+        else {
+
             let sqlQuery = `update product
                             set isDeleted = 1
                             where productId = ?`
 
             shoppingCartdb.run(sqlQuery, [req.params.productId], (err) => {
-                if(err){
+                if (err) {
                     return res.status(400).send(err)
                 }
-                else{
+                else {
 
                     return res.status(200).send('Product Deleted!!!')
                 }
