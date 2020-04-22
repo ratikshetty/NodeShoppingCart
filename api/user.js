@@ -28,7 +28,7 @@ function getUser(req, res){
                         return res.send(err);
                     }
                     else{
-                        return res.status(200).json({token});
+                        return res.status(200).json({token:token, userId: user.userId});
                     }
                 })
             }
