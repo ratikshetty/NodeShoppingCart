@@ -103,4 +103,53 @@ function deleteBid(req, res) {
     })
 }
 
-module.exports = { getBids, addBid, deleteBid }
+function sellProduct(req, res){
+
+    jwt.verify(req.token, encryptionKey, (err, authData) => {
+
+        if(err){
+            return res.sendStatus(403)
+        }
+        else{
+
+            let sqlQuery = `update bid
+                            set SoldtoThisBid = 1
+                            where bidId = ?;
+                            `
+
+          
+            shoppingCartdb.run(sqlQuery, [req.params.bidId], err => {
+
+                if(err){
+                    return res.status(400).send(err)
+                }
+                else{
+
+                    sqlQuery = `update product
+                                set isSold = 1,
+                                userIdOfProductSoldTo = ?
+                                where productId = ?`
+                    
+                                
+
+                    shoppingCartdb.run(sqlQuery, [req.body.soldToId, req.body.productId], err => {
+
+
+                        if(err){
+                            console.log(err)
+                            return res.status(401).send(err)
+                        }
+                        else{
+                            console.log('productSold')
+                            return res.status(200).send("Product sold!!!")
+                        }
+                    })
+                }
+            })
+
+
+        }
+    })
+}
+
+module.exports = { getBids, addBid, deleteBid, sellProduct }

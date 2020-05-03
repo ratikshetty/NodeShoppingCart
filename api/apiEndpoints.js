@@ -5,7 +5,7 @@ const {shoppingCartdb} = require('./shoppingCartDBConnect');
 const {getUser, createUser, updateUser, deleteUser} = require ('./user')
 const {getProducts, addProduct, updateProduct, deleteProduct} = require('./product')
 const {addImage, getImage, deleteImage} = require('./productImage')
-const {getBids, addBid, deleteBid} = require('./bid')
+const {getBids, addBid, deleteBid, sellProduct} = require('./bid')
 const {getTypes} = require('./types')
 
 const app = express();
@@ -83,6 +83,13 @@ app.delete('/bid/:productId/:bidId', verify, (req, res) => {
     deleteBid(req, res)
 })
 
+// Sell product API's --start
+app.put('/bid/:bidId', verify, (req, res) => {
+    sellProduct(req, res)
+})
+
+// Sell product API's --end
+
 // Bid APIs --end
 
 // Product Type APIs --start
@@ -90,4 +97,6 @@ app.get('/type', (req, res) => {
     getTypes(req, res)
 })
 // Product Type APIs --end
+
+
 app.listen(3003);
